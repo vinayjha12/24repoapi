@@ -22,11 +22,11 @@ def test_tc001_verify_api_creates_user_with_valid_token_and_valid_payload():
         "Authorization": "Bearer eyJraWQiOiJhMDUyYmIzZi02YmY0LTRhMzQtYjMwYi01OWQ5OGU0Yzg0MjAiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImF1ZCI6InB1YmxpYy1jbGllbnQiLCJuYmYiOjE3NzcwMDMxMjQsInNjb3BlIjpbIm9wZW5pZCJdLCJpc3MiOiJodHRwczovL2F1dGgudnZkbnRlY2guY29tIiwiZXhwIjoxNzc3MDg5NTI0LCJpYXQiOjE3NzcwMDMxMjQsImp0aSI6ImE5NGUwMWJjLWEzZDItNDM2Yy04NTY2LWRhZTM4ZjA0NzMxNyIsImF1dGhvcml0aWVzIjpbIlJPTEVfQURNSU4iXX0.b4RVwHaH5ZI8rP5nqRU1AAWzPdv3Om__JzX1Pan8Vg8MtUYZd_3loGIA6lDahW6oBOzOIEAZtstaFN30qAb2SPkAVp-aIDvagKMYENsnBLKE3eINXyZUYsCchAMnx8ibrr-bKNEp6WOwLjrrbAOsCg6ezYor5z1nUid8FaZSwn2e9bUEAapHf-wSJ1NwD76XPJqWMtUABd50Ey-28sFdjkRqEr9_3XHtGz8GxSewReqoNuj2ExvOpTwZ-14qooXocD0ftOg_iFC5_2fB6oZLyQIAb8y5r6x1sU2w_JwRAurRgUANxwnuGQHqudeSkCl0Qo065x5Xr-zQzgSVwRVmqA"
     }
     payload = {
-      "email": "dfgfgddg@gmail.com",
+      "email": "Amiiitttss@gmail.com",
       "designation": "SSE",
-      "phoneNumber": "+911209125465",
-      "empName": "ADFraaaaaaaaarrrrrrrDG",
-      "username": "eqfffffsaajhhhhhhhAmiyssddwswew",
+      "phoneNumber": "+912832178687",
+      "empName": "Amamamuu",
+      "username": "aajmkhsaaj",
       "password": "es@W12343",
       "empNo": "1232341365"
     }
