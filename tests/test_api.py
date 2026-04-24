@@ -28,7 +28,7 @@ def test_tc001_verify_api_creates_user_with_valid_token_and_valid_payload():
       "empName": "Amamamuu",
       "username": "aajmkhsaaj",
       "password": "es@W12343",
-      "empNo": "1232341365"
+      "empNo": "2988776"
     }
     response = requests.post(url, headers=headers, json=payload)
     assert response.status_code == 201
