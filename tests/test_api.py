@@ -1,50 +1,63 @@
+import os
+import time
 import pytest
 import requests
 
-# ==================== GLOBAL CONFIGURATION ====================
 BASE_URL = "https://auth.vvdntech.com/api/v1"
 
 COMMON_HEADERS = {
-    "Content-Type": "application/json"
+    "Content-Type": "application/json",
+    "Accept": "application/json, text/plain, */*"
 }
 
-# ==================== TEST FUNCTIONS ====================
+TOKEN = os.getenv("ACCESS_TOKEN", "PASTE_TOKEN_HERE")
+
+
 def test_tc001_verify_api_creates_user_with_valid_token_and_valid_payload():
-    """
-    Test ID: TC001
-    Name: Verify API creates user with valid token and valid payload
-    Expected Behavior: The API should successfully create a new user and return a 201 status code with the user's data.
-    """
     url = f"{BASE_URL}/users"
+
+    unique = int(time.time())
+
     headers = {
         **COMMON_HEADERS,
-        "Content-Type": "application/json",
-        "Authorization": "Bearer eyJraWQiOiJhMDUyYmIzZi02YmY0LTRhMzQtYjMwYi01OWQ5OGU0Yzg0MjAiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImF1ZCI6InB1YmxpYy1jbGllbnQiLCJuYmYiOjE3NzcwMDMxMjQsInNjb3BlIjpbIm9wZW5pZCJdLCJpc3MiOiJodHRwczovL2F1dGgudnZkbnRlY2guY29tIiwiZXhwIjoxNzc3MDg5NTI0LCJpYXQiOjE3NzcwMDMxMjQsImp0aSI6ImE5NGUwMWJjLWEzZDItNDM2Yy04NTY2LWRhZTM4ZjA0NzMxNyIsImF1dGhvcml0aWVzIjpbIlJPTEVfQURNSU4iXX0.b4RVwHaH5ZI8rP5nqRU1AAWzPdv3Om__JzX1Pan8Vg8MtUYZd_3loGIA6lDahW6oBOzOIEAZtstaFN30qAb2SPkAVp-aIDvagKMYENsnBLKE3eINXyZUYsCchAMnx8ibrr-bKNEp6WOwLjrrbAOsCg6ezYor5z1nUid8FaZSwn2e9bUEAapHf-wSJ1NwD76XPJqWMtUABd50Ey-28sFdjkRqEr9_3XHtGz8GxSewReqoNuj2ExvOpTwZ-14qooXocD0ftOg_iFC5_2fB6oZLyQIAb8y5r6x1sU2w_JwRAurRgUANxwnuGQHqudeSkCl0Qo065x5Xr-zQzgSVwRVmqA"
+        "Authorization": f"Bearer {TOKEN}"
     }
+
     payload = {
-      "email": "dfgfgdfgdfgdg@gmail.com",
-      "designation": "SSE",
-      "phoneNumber": "+911233125465",
-      "empName": "ADFrrrrrrrrDG",
-      "username": "eqfffffsssddwswew",
-      "password": "es@W12343",
-      "empNo": "1232341365"
-    }
-    response = requests.post(url, headers=headers, json=payload)
-    assert response.status_code == 201
-    expected_response = {
-      "status": 201,
-      "message": "User registered successfully",
-      "data": {
-        "empNo": "1232354365",
-        "empName": "ADFFGDG",
-        "username": "equsswew",
-        "email": "afsg@gmail.com",
+        "email": f"user{unique}@gmail.com",
         "designation": "SSE",
-        "phoneNumber": "+911232435465"
-      }
+        "phoneNumber": f"+91123{str(unique)[-7:]}",
+        "empName": "Test User",
+        "username": f"user_{unique}",
+        "password": "es@W12343",
+        "empNo": str(unique)[-10:]
     }
-    assert response.json() == expected_response
+
+    response = requests.post(url, headers=headers, json=payload)
+
+    assert response.status_code == 201
+
+    body = response.json()
+
+    assert body["status"] == 201
+    assert body["message"] == "User registered successfully"
+
+    assert "timestamp" in body
+    assert "traceId" in body
+    assert "data" in body
+
+    data = body["data"]
+
+    assert data["empNo"] == payload["empNo"]
+    assert data["empName"] == payload["empName"]
+    assert data["username"] == payload["username"]
+    assert data["email"] == payload["email"]
+    assert data["designation"] == payload["designation"]
+    assert data["phoneNumber"] == payload["phoneNumber"]
+
+    assert data["enabled"] is True
+    assert "id" in data
+    assert "authorities" in data
 
 # def test_tc002_verify_api_returns_401_for_an_invalid_token():
 #     """
