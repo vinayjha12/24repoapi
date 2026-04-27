@@ -89,7 +89,7 @@ def test_tc002_verify_api_returns_401_for_an_invalid_token():
 
     body = response.json()
 
-    assert body["message"] == "Unauthorized"
+    assert body["error"] == "Unauthorized"
 
 # def test_tc003_verify_api_returns_401_for_an_expired_token():
 #     """
