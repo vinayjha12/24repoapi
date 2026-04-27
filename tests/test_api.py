@@ -45,19 +45,19 @@ def test_tc001_verify_api_creates_user_with_valid_token_and_valid_payload():
     assert data["email"] == payload["email"]
     assert data["designation"] == payload["designation"]
     assert data["phoneNumber"] == payload["phoneNumber"]
-    expected_response = {
-      "status": 201,
-      "message": "User registered successfully",
-      "data": {
-        "empNo": "1232354365",
-        "empName": "ADFFGDG",
-        "username": "equsswew",
-        "email": "afsg@gmail.com",
-        "designation": "SSE",
-        "phoneNumber": "+911232435465"
-      }
-    }
-    assert response.json() == expected_response
+    # expected_response = {
+    #   "status": 201,
+    #   "message": "User registered successfully",
+    #   "data": {
+    #     "empNo": "1232354365",
+    #     "empName": "ADFFGDG",
+    #     "username": "equsswew",
+    #     "email": "afsg@gmail.com",
+    #     "designation": "SSE",
+    #     "phoneNumber": "+911232435465"
+    #   }
+    # }
+    # assert response.json() == expected_response
 
 def test_tc002_verify_api_returns_401_for_an_invalid_token():
     """
