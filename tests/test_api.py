@@ -8,7 +8,7 @@ COMMON_HEADERS = {
     "Content-Type": "application/json"
 }
 
-==================== TEST FUNCTIONS ====================
+# ==================== TEST FUNCTIONS ====================
 def test_tc001_verify_api_creates_user_with_valid_token_and_valid_payload():
     """
     Test ID: TC001
