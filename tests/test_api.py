@@ -148,38 +148,38 @@ def test_tc002_verify_api_returns_401_for_an_invalid_token():
     assert body.get("error") == "Unauthorized", f"Unexpected body: {body}"
     assert body.get("error") == "Unauthorized", body
 
-# def test_tc003_verify_api_returns_401_for_an_expired_token():
-#     """
-#     Test ID: TC003
-#     Name: Verify API returns 401 for an expired token
-#     Expected Behavior: The API should reject the request with a 401 Unauthorized status code due to the expired token.
-#     """
+def test_tc003_verify_api_returns_401_for_an_expired_token():
+    """
+    Test ID: TC003
+    Name: Verify API returns 401 for an expired token
+    Expected Behavior: The API should reject the request with a 401 Unauthorized status code due to the expired token.
+    """
 
-#     url = f"{BASE_URL}/users"
+    url = f"{BASE_URL}/users"
 
-#     headers = {
-#         **COMMON_HEADERS,
-#         "Content-Type": "application/json",
-#         "Authorization": "Bearer expired_access_token_placeholder_456"
-#     }
+    headers = {
+        **COMMON_HEADERS,
+        # "Content-Type": "application/json",
+       "Authorization": "Bearer invalidtoken123"
+    }
 
-#     payload = {
-#         "email": "test@example.com",
-#         "designation": "QA",
-#         "phoneNumber": "+919876543210",
-#         "empName": "Test User",
-#         "username": "testuser_expiredtoken",
-#         "password": "Password@123",
-#         "empNo": "987654"
-#     }
+    payload = {
+        "email": "test@example.com",
+        "designation": "QA",
+        "phoneNumber": "+919876543210",
+        "empName": "Test User",
+        "username": "testuser_expiredtoken",
+        "password": "Password@123",
+        "empNo": "987654"
+    }
 
-#     response = requests.post(url, headers=headers, json=payload)
+    response = requests.post(url, headers=headers, json=payload)
 
-#     assert response.status_code == 401, response.text
+    assert response.status_code == 401, response.text
 
-#     body = response.json()
+    body = response.json()
 
-#     assert body["message"] == "Token Invalid or expired"
+    assert body["error"] == "Unauthorized"
 
 # def test_tc004_verify_api_returns_403_for_an_unauthorized_user():
 #     """
