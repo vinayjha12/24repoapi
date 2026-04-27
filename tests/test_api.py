@@ -59,17 +59,43 @@ def test_tc001_verify_api_creates_user_with_valid_token_and_valid_payload():
     # }
     # assert response.json() == expected_response
 
+# def test_tc002_verify_api_returns_401_for_an_invalid_token():
+#     """
+#     Test ID: TC002
+#     Name: Verify API returns 401 for an invalid token
+#     Expected Behavior: The API should reject the request with a 401 Unauthorized status code due to the invalid token.
+#     """
+#     url = f"{BASE_URL}/users"
+
+#     headers = {
+#         **COMMON_HEADERS,
+#         "Content-Type": "application/json",
+#         "Authorization": "Bearer invalidtoken123"
+#     }
+
+#     payload = {
+#         "email": "test@example.com",
+#         "designation": "QA",
+#         "phoneNumber": "+919876543210",
+#         "empName": "Test User",
+#         "username": "testuser_invalidtoken",
+#         "password": "Password@123",
+#         "empNo": "987654"
+#     }
+
+#     response = requests.post(url, headers=headers, json=payload)
+
+#     assert response.status_code == 401, response.text
+
+#     body = response.json()
+
+#     assert body["error"] == "Unauthorized"
+
 def test_tc002_verify_api_returns_401_for_an_invalid_token():
-    """
-    Test ID: TC002
-    Name: Verify API returns 401 for an invalid token
-    Expected Behavior: The API should reject the request with a 401 Unauthorized status code due to the invalid token.
-    """
     url = f"{BASE_URL}/users"
 
     headers = {
         **COMMON_HEADERS,
-        "Content-Type": "application/json",
         "Authorization": "Bearer invalidtoken123"
     }
 
@@ -89,7 +115,7 @@ def test_tc002_verify_api_returns_401_for_an_invalid_token():
 
     body = response.json()
 
-    assert body["error"] == "Unauthorized"
+    assert body.get("error") == "Unauthorized", body
 
 # def test_tc003_verify_api_returns_401_for_an_expired_token():
 #     """
