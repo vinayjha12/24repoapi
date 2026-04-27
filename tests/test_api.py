@@ -91,6 +91,32 @@ COMMON_HEADERS = {
 
 #     assert body["error"] == "Unauthorized"
 
+# def test_tc002_verify_api_returns_401_for_an_invalid_token():
+#     url = f"{BASE_URL}/users"
+
+#     headers = {
+#         **COMMON_HEADERS,
+#         "Authorization": "Bearer invalidtoken123"
+#     }
+
+#     payload = {
+#         "email": "test@example.com",
+#         "designation": "QA",
+#         "phoneNumber": "+919876543210",
+#         "empName": "Test User",
+#         "username": "testuser_invalidtoken",
+#         "password": "Password@123",
+#         "empNo": "987654"
+#     }
+
+#     response = requests.post(url, headers=headers, json=payload)
+
+#     assert response.status_code == 401, response.text
+
+#     body = response.json()
+#     print("Resoponse Data is:",body)
+
+
 def test_tc002_verify_api_returns_401_for_an_invalid_token():
     url = f"{BASE_URL}/users"
 
@@ -111,10 +137,14 @@ def test_tc002_verify_api_returns_401_for_an_invalid_token():
 
     response = requests.post(url, headers=headers, json=payload)
 
+    # ? Assertion 1
     assert response.status_code == 401, response.text
 
     body = response.json()
-    print("Resoponse Data is:",body)
+    print("Response Data is:", body)
+
+    # ? Assertion 2 (IMPORTANT)
+    assert body.get("error") == "Unauthorized", f"Unexpected body: {body}"
     # assert body.get("error") == "Unauthorized", body
 
 # def test_tc003_verify_api_returns_401_for_an_expired_token():
