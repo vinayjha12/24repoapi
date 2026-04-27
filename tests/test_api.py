@@ -144,7 +144,7 @@ def test_tc002_verify_api_returns_401_for_an_invalid_token():
     print("Response Data is:", body)
 
 
-    ? Assertion 2 (IMPORTANT)
+    # ? Assertion 2 (IMPORTANT)
     assert body.get("error") == "Unauthorized", f"Unexpected body: {body}"
     assert body.get("error") == "Unauthorized", body
 
