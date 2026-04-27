@@ -9,6 +9,56 @@ COMMON_HEADERS = {
 }
 
 # ==================== TEST FUNCTIONS ====================
+def test_tc001_verify_api_creates_user_with_valid_token_and_valid_payload():
+    """
+    Test ID: TC001
+    Name: Verify API creates user with valid token and valid payload
+    Expected Behavior: The API should successfully create a new user and return a 201 status code with the user's data.
+    """
+    url = f"{BASE_URL}/users"
+    headers = {
+        **COMMON_HEADERS,
+        "Content-Type": "application/json",
+        "Authorization": "Bearer eyJraWQiOiJhMDUyYmIzZi02YmY0LTRhMzQtYjMwYi01OWQ5OGU0Yzg0MjAiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImF1ZCI6InB1YmxpYy1jbGllbnQiLCJuYmYiOjE3NzcwMDMxMjQsInNjb3BlIjpbIm9wZW5pZCJdLCJpc3MiOiJodHRwczovL2F1dGgudnZkbnRlY2guY29tIiwiZXhwIjoxNzc3MDg5NTI0LCJpYXQiOjE3NzcwMDMxMjQsImp0aSI6ImE5NGUwMWJjLWEzZDItNDM2Yy04NTY2LWRhZTM4ZjA0NzMxNyIsImF1dGhvcml0aWVzIjpbIlJPTEVfQURNSU4iXX0.b4RVwHaH5ZI8rP5nqRU1AAWzPdv3Om__JzX1Pan8Vg8MtUYZd_3loGIA6lDahW6oBOzOIEAZtstaFN30qAb2SPkAVp-aIDvagKMYENsnBLKE3eINXyZUYsCchAMnx8ibrr-bKNEp6WOwLjrrbAOsCg6ezYor5z1nUid8FaZSwn2e9bUEAapHf-wSJ1NwD76XPJqWMtUABd50Ey-28sFdjkRqEr9_3XHtGz8GxSewReqoNuj2ExvOpTwZ-14qooXocD0ftOg_iFC5_2fB6oZLyQIAb8y5r6x1sU2w_JwRAurRgUANxwnuGQHqudeSkCl0Qo065x5Xr-zQzgSVwRVmqA"
+    }
+    payload = {
+      "email": "Amiiitttss@gmail.com",
+      "designation": "SSE",
+      "phoneNumber": "+912832178687",
+      "empName": "Amamamuu",
+      "username": "aajmkhsaaj",
+      "password": "es@W12343",
+      "empNo": "2988776"
+    }
+    response = requests.post(url, headers=headers, json=payload)
+    assert response.status_code == 201
+    body = response.json()
+
+    assert body["status"] == 201
+    assert body["message"] == "User registered successfully"
+
+    data = body["data"]
+
+    assert data["empNo"] == payload["empNo"]
+    assert data["empName"] == payload["empName"]
+    assert data["username"] == payload["username"]
+    assert data["email"] == payload["email"]
+    assert data["designation"] == payload["designation"]
+    assert data["phoneNumber"] == payload["phoneNumber"]
+    # expected_response = {
+    #   "status": 201,
+    #   "message": "User registered successfully",
+    #   "data": {
+    #     "empNo": "1232354365",
+    #     "empName": "ADFFGDG",
+    #     "username": "equsswew",
+    #     "email": "afsg@gmail.com",
+    #     "designation": "SSE",
+    #     "phoneNumber": "+911232435465"
+    #   }
+    # }
+    # assert response.json() == expected_response
+
 def test_tc002_verify_api_returns_401_for_an_invalid_token():
     """
     Test ID: TC002
@@ -40,47 +90,6 @@ def test_tc002_verify_api_returns_401_for_an_invalid_token():
     body = response.json()
 
     assert body["message"] == "Token Invalid or expired"
-    # expected_response = {
-    #   "status": 201,
-    #   "message": "User registered successfully",
-    #   "data": {
-    #     "empNo": "1232354365",
-    #     "empName": "ADFFGDG",
-    #     "username": "equsswew",
-    #     "email": "afsg@gmail.com",
-    #     "designation": "SSE",
-    #     "phoneNumber": "+911232435465"
-    #   }
-    # }
-    # assert response.json() == expected_response
-
-def test_tc002_verify_api_returns_401_for_an_invalid_token():
-    """
-    Test ID: TC002
-    Name: Verify API returns 401 for an invalid token
-    Expected Behavior: The API should reject the request with a 401 Unauthorized status code due to the invalid token.
-    """
-    url = f"{BASE_URL}/api/v1/users"
-    headers = {
-        **COMMON_HEADERS,
-        "Content-Type": "application/json",
-        "Authorization": "Bearer invalidtoken123"
-    }
-    payload = {
-      "email": "test@example.com",
-      "designation": "QA",
-      "phoneNumber": "+919876543210",
-      "empName": "Test User",
-      "username": "testuser_invalidtoken",
-      "password": "Password@123",
-      "empNo": "987654"
-    }
-    response = requests.post(url, headers=headers, json=payload)
-    assert response.status_code == 401
-    expected_response = {
-      "message": "Token Invalid or expired"
-    }
-    assert response.json() == expected_response
 
 def test_tc003_verify_api_returns_401_for_an_expired_token():
     """
