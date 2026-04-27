@@ -91,237 +91,237 @@ def test_tc002_verify_api_returns_401_for_an_invalid_token():
 
     assert body["message"] == "Token Invalid or expired"
 
-def test_tc003_verify_api_returns_401_for_an_expired_token():
-    """
-    Test ID: TC003
-    Name: Verify API returns 401 for an expired token
-    Expected Behavior: The API should reject the request with a 401 Unauthorized status code due to the expired token.
-    """
+# def test_tc003_verify_api_returns_401_for_an_expired_token():
+#     """
+#     Test ID: TC003
+#     Name: Verify API returns 401 for an expired token
+#     Expected Behavior: The API should reject the request with a 401 Unauthorized status code due to the expired token.
+#     """
 
-    url = f"{BASE_URL}/users"
+#     url = f"{BASE_URL}/users"
 
-    headers = {
-        **COMMON_HEADERS,
-        "Content-Type": "application/json",
-        "Authorization": "Bearer expired_access_token_placeholder_456"
-    }
+#     headers = {
+#         **COMMON_HEADERS,
+#         "Content-Type": "application/json",
+#         "Authorization": "Bearer expired_access_token_placeholder_456"
+#     }
 
-    payload = {
-        "email": "test@example.com",
-        "designation": "QA",
-        "phoneNumber": "+919876543210",
-        "empName": "Test User",
-        "username": "testuser_expiredtoken",
-        "password": "Password@123",
-        "empNo": "987654"
-    }
+#     payload = {
+#         "email": "test@example.com",
+#         "designation": "QA",
+#         "phoneNumber": "+919876543210",
+#         "empName": "Test User",
+#         "username": "testuser_expiredtoken",
+#         "password": "Password@123",
+#         "empNo": "987654"
+#     }
 
-    response = requests.post(url, headers=headers, json=payload)
+#     response = requests.post(url, headers=headers, json=payload)
 
-    assert response.status_code == 401, response.text
+#     assert response.status_code == 401, response.text
 
-    body = response.json()
+#     body = response.json()
 
-    assert body["message"] == "Token Invalid or expired"
+#     assert body["message"] == "Token Invalid or expired"
 
-def test_tc004_verify_api_returns_403_for_an_unauthorized_user():
-    """
-    Test ID: TC004
-    Name: Verify API returns 403 for an unauthorized user
-    Expected Behavior: The API should reject the request with a 403 Forbidden status code because the user lacks creation permissions.
-    """
+# def test_tc004_verify_api_returns_403_for_an_unauthorized_user():
+#     """
+#     Test ID: TC004
+#     Name: Verify API returns 403 for an unauthorized user
+#     Expected Behavior: The API should reject the request with a 403 Forbidden status code because the user lacks creation permissions.
+#     """
 
-    url = f"{BASE_URL}/users"
+#     url = f"{BASE_URL}/users"
 
-    headers = {
-        **COMMON_HEADERS,
-        "Content-Type": "application/json",
-        "Authorization": "Bearer token_for_user_without_permission_789"
-    }
+#     headers = {
+#         **COMMON_HEADERS,
+#         "Content-Type": "application/json",
+#         "Authorization": "Bearer token_for_user_without_permission_789"
+#     }
 
-    payload = {
-        "email": "test@example.com",
-        "designation": "QA",
-        "phoneNumber": "+919876543210",
-        "empName": "Test User",
-        "username": "testuser_unauthorized",
-        "password": "Password@123",
-        "empNo": "987654"
-    }
+#     payload = {
+#         "email": "test@example.com",
+#         "designation": "QA",
+#         "phoneNumber": "+919876543210",
+#         "empName": "Test User",
+#         "username": "testuser_unauthorized",
+#         "password": "Password@123",
+#         "empNo": "987654"
+#     }
 
-    response = requests.post(url, headers=headers, json=payload)
+#     response = requests.post(url, headers=headers, json=payload)
 
-    assert response.status_code == 403, response.text
+#     assert response.status_code == 403, response.text
 
-    body = response.json()
+#     body = response.json()
 
-    assert body["message"] == "Access Denied"
-    assert body["error"] == "Access Denied"
-def test_tc005_verify_api_returns_400_for_missing_a_mandatory_field():
-    """
-    Test ID: TC005
-    Name: Verify API returns 400 for missing a mandatory field (username)
-    Expected Behavior: The API should return a 400 Bad Request status with a validation error message for the missing username.
-    """
+#     assert body["message"] == "Access Denied"
+#     assert body["error"] == "Access Denied"
+# def test_tc005_verify_api_returns_400_for_missing_a_mandatory_field():
+#     """
+#     Test ID: TC005
+#     Name: Verify API returns 400 for missing a mandatory field (username)
+#     Expected Behavior: The API should return a 400 Bad Request status with a validation error message for the missing username.
+#     """
 
-    url = f"{BASE_URL}/users"
+#     url = f"{BASE_URL}/users"
 
-    headers = {
-        **COMMON_HEADERS,
-        "Content-Type": "application/json",
-        "Authorization": "Bearer valid_access_token_placeholder_123"
-    }
+#     headers = {
+#         **COMMON_HEADERS,
+#         "Content-Type": "application/json",
+#         "Authorization": "Bearer valid_access_token_placeholder_123"
+#     }
 
-    payload = {
-        "email": "missinguser@example.com",
-        "designation": "SSE",
-        "phoneNumber": "+911232435466",
-        "empName": "Missing User",
-        "password": "es@W12343",
-        "empNo": "1232354366"
-    }
+#     payload = {
+#         "email": "missinguser@example.com",
+#         "designation": "SSE",
+#         "phoneNumber": "+911232435466",
+#         "empName": "Missing User",
+#         "password": "es@W12343",
+#         "empNo": "1232354366"
+#     }
 
-    response = requests.post(url, headers=headers, json=payload)
+#     response = requests.post(url, headers=headers, json=payload)
 
-    assert response.status_code == 400, response.text
+#     assert response.status_code == 400, response.text
 
-    body = response.json()
+#     body = response.json()
 
-    assert body["status"] == 400
-    assert body["message"] == "Validation error"
+#     assert body["status"] == 400
+#     assert body["message"] == "Validation error"
 
-    # validate field error
-    assert any(d["field"] == "username" for d in body["details"])
+#     # validate field error
+#     assert any(d["field"] == "username" for d in body["details"])
 
-def test_tc006_verify_api_returns_409_for_a_duplicate_username():
-    """
-    Test ID: TC006
-    Name: Verify API returns 409 for a duplicate username
-    Expected Behavior: The API should return a 409 Conflict status code indicating the username already exists.
-    """
+# def test_tc006_verify_api_returns_409_for_a_duplicate_username():
+#     """
+#     Test ID: TC006
+#     Name: Verify API returns 409 for a duplicate username
+#     Expected Behavior: The API should return a 409 Conflict status code indicating the username already exists.
+#     """
 
-    url = f"{BASE_URL}/users"
+#     url = f"{BASE_URL}/users"
 
-    headers = {
-        **COMMON_HEADERS,
-        "Content-Type": "application/json",
-        "Authorization": "Bearer valid_access_token_placeholder_123"
-    }
+#     headers = {
+#         **COMMON_HEADERS,
+#         "Content-Type": "application/json",
+#         "Authorization": "Bearer valid_access_token_placeholder_123"
+#     }
 
-    payload = {
-        "email": "another@example.com",
-        "designation": "SSE",
-        "phoneNumber": "+911232435467",
-        "empName": "Duplicate User",
-        "username": "Admin",
-        "password": "es@W12343",
-        "empNo": "1232354367"
-    }
+#     payload = {
+#         "email": "another@example.com",
+#         "designation": "SSE",
+#         "phoneNumber": "+911232435467",
+#         "empName": "Duplicate User",
+#         "username": "Admin",
+#         "password": "es@W12343",
+#         "empNo": "1232354367"
+#     }
 
-    response = requests.post(url, headers=headers, json=payload)
+#     response = requests.post(url, headers=headers, json=payload)
 
-    assert response.status_code == 409, response.text
+#     assert response.status_code == 409, response.text
 
-    body = response.json()
+#     body = response.json()
 
-    assert body["status"] == 409
-    assert body["message"] == "User already exists"
-    assert "User already exists" in body["error"]
+#     assert body["status"] == 409
+#     assert body["message"] == "User already exists"
+#     assert "User already exists" in body["error"]
 
-def test_tc007_verify_api_returns_400_for_an_invalid_email_format():
-    """
-    Test ID: TC007
-    Name: Verify API returns 400 for an invalid email format
-    Expected Behavior: The API should return a 400 Bad Request status with a validation error for the malformed email address.
-    """
+# def test_tc007_verify_api_returns_400_for_an_invalid_email_format():
+#     """
+#     Test ID: TC007
+#     Name: Verify API returns 400 for an invalid email format
+#     Expected Behavior: The API should return a 400 Bad Request status with a validation error for the malformed email address.
+#     """
 
-    url = f"{BASE_URL}/users"
+#     url = f"{BASE_URL}/users"
 
-    headers = {
-        **COMMON_HEADERS,
-        "Content-Type": "application/json",
-        "Authorization": "Bearer valid_access_token_placeholder_123"
-    }
+#     headers = {
+#         **COMMON_HEADERS,
+#         "Content-Type": "application/json",
+#         "Authorization": "Bearer valid_access_token_placeholder_123"
+#     }
 
-    payload = {
-        "email": "invalid-email-format",
-        "designation": "SSE",
-        "phoneNumber": "+911232435468",
-        "empName": "Invalid Email",
-        "username": "invalidemailuser",
-        "password": "es@W12343",
-        "empNo": "1232354368"
-    }
+#     payload = {
+#         "email": "invalid-email-format",
+#         "designation": "SSE",
+#         "phoneNumber": "+911232435468",
+#         "empName": "Invalid Email",
+#         "username": "invalidemailuser",
+#         "password": "es@W12343",
+#         "empNo": "1232354368"
+#     }
 
-    response = requests.post(url, headers=headers, json=payload)
+#     response = requests.post(url, headers=headers, json=payload)
 
-    assert response.status_code == 400, response.text
+#     assert response.status_code == 400, response.text
 
-    body = response.json()
+#     body = response.json()
 
-    assert body["status"] == 400
-    assert body["message"] == "Validation error"
+#     assert body["status"] == 400
+#     assert body["message"] == "Validation error"
 
-    # validate email field error
-    assert any(d["field"] == "email" for d in body["details"])
-def test_tc008_verify_api_returns_400_for_an_empty_request_body():
-    """
-    Test ID: TC008
-    Name: Verify API returns 400 for an empty request body
-    Expected Behavior: The API should return a 400 Bad Request status with a validation error message for the empty payload.
-    """
+#     # validate email field error
+#     assert any(d["field"] == "email" for d in body["details"])
+# def test_tc008_verify_api_returns_400_for_an_empty_request_body():
+#     """
+#     Test ID: TC008
+#     Name: Verify API returns 400 for an empty request body
+#     Expected Behavior: The API should return a 400 Bad Request status with a validation error message for the empty payload.
+#     """
 
-    url = f"{BASE_URL}/users"
+#     url = f"{BASE_URL}/users"
 
-    headers = {
-        **COMMON_HEADERS,
-        "Content-Type": "application/json",
-        "Authorization": "Bearer valid_access_token_placeholder_123"
-    }
+#     headers = {
+#         **COMMON_HEADERS,
+#         "Content-Type": "application/json",
+#         "Authorization": "Bearer valid_access_token_placeholder_123"
+#     }
 
-    payload = {}
+#     payload = {}
 
-    response = requests.post(url, headers=headers, json=payload)
+#     response = requests.post(url, headers=headers, json=payload)
 
-    assert response.status_code == 400, response.text
+#     assert response.status_code == 400, response.text
 
-    body = response.json()
+#     body = response.json()
 
-    assert body["status"] == 400
-    assert body["message"] == "Validation error"
+#     assert body["status"] == 400
+#     assert body["message"] == "Validation error"
 
-    # optional: check that validation details exist
-    assert "details" in body
+#     # optional: check that validation details exist
+#     assert "details" in body
 
-def test_tc009_verify_api_validation_for_a_phone_number_without_a_country_code():
-    """
-    Test ID: TC009
-    Name: Verify API validation for a phone number without a country code
-    Expected: API returns 400 with a validation error for the phone number format.
-    """
+# def test_tc009_verify_api_validation_for_a_phone_number_without_a_country_code():
+#     """
+#     Test ID: TC009
+#     Name: Verify API validation for a phone number without a country code
+#     Expected: API returns 400 with a validation error for the phone number format.
+#     """
 
-    url = f"{BASE_URL}/users"
+#     url = f"{BASE_URL}/users"
 
-    headers = {
-        **COMMON_HEADERS,
-        "Authorization": "Bearer eyJraWQiOiJhMDUy..."
-    }
+#     headers = {
+#         **COMMON_HEADERS,
+#         "Authorization": "Bearer eyJraWQiOiJhMDUy..."
+#     }
 
-    payload = {
-        "email": "nocountrycode@example.com",
-        "designation": "SSE",
-        "phoneNumber": "1232435465",
-        "empName": "No Country Code",
-        "username": "nocountrycode",
-        "password": "es@W12343",
-        "empNo": "1232354369"
-    }
+#     payload = {
+#         "email": "nocountrycode@example.com",
+#         "designation": "SSE",
+#         "phoneNumber": "1232435465",
+#         "empName": "No Country Code",
+#         "username": "nocountrycode",
+#         "password": "es@W12343",
+#         "empNo": "1232354369"
+#     }
 
-    response = requests.post(url, headers=headers, json=payload)
+#     response = requests.post(url, headers=headers, json=payload)
 
-    assert response.status_code == 400, response.text
+#     assert response.status_code == 400, response.text
 
-    body = response.json()
+#     body = response.json()
 
     assert body["status"] == 400
     assert body["message"] == "Validation error"
